@@ -31,12 +31,12 @@ import java.util.Map;
 public class ClienteController {
 
     @Autowired
-    private IClienteService clienteDao;
+    private IClienteService clienteService;
     @Autowired
     private IUploadFileService fileService;
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
-    private final static String UPLOADS_FOLDER = "uploads";
+   // private final Logger log = LoggerFactory.getLogger(getClass());
+   // private final static String UPLOADS_FOLDER = "uploads";
 
     @GetMapping(value = "/uploads/{filename:.+}")
     public ResponseEntity<Resource> verFoto(@PathVariable String filename) {
@@ -58,7 +58,7 @@ public class ClienteController {
     @GetMapping(value = "/ver/{id}")
     public String ver(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash) {
 
-        Cliente cliente = clienteDao.findOne(id);
+        Cliente cliente = clienteService.findOne(id);
         if (cliente == null) {
             flash.addFlashAttribute("error", "El cliente no existe en nuestra BBDD");
             return "redirect:/listar";
@@ -75,8 +75,8 @@ public class ClienteController {
 
     @RequestMapping(value = "/listar", method = RequestMethod.GET)
     private String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
-        Pageable pageRequest = (Pageable) PageRequest.of(page, 5);
-        Page<Cliente> clientes = clienteDao.findAll(pageRequest);
+        Pageable pageRequest = PageRequest.of(page, 5);
+        Page<Cliente> clientes = clienteService.findAll(pageRequest);
         PageRender<Cliente> pageRender = new PageRender<>("/listar", clientes);
         model.addAttribute("titulo", "Listado de clientes");
         model.addAttribute("clientes", clientes);
@@ -129,7 +129,7 @@ public class ClienteController {
         }
         String mensajeFlash = (cliente.getId() != null) ? "Cliente editado correctamente"
                 : "Cliente inseratado correctamente";
-        clienteDao.save(cliente);
+        clienteService.save(cliente);
         status.setComplete();
         flash.addFlashAttribute("success", mensajeFlash);
         return "redirect:/listar";
@@ -138,8 +138,8 @@ public class ClienteController {
     @RequestMapping(value = "/eliminarCliente/{id}")
     private String Eliminar(@PathVariable("id") Long id, RedirectAttributes flash) {
         if (id > 0) {
-            Cliente cliente = clienteDao.findOne(id);
-            clienteDao.delete(id);
+            Cliente cliente = clienteService.findOne(id);
+            clienteService.delete(id);
             flash.addFlashAttribute("success", "Cliente eliminado correctamente");
 
             if (fileService.delete(cliente.getFoto())) {
@@ -156,7 +156,7 @@ public class ClienteController {
     private String editar(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash) {
         Cliente cliente = null;
         if (id > 0) {
-            cliente = clienteDao.findOne(id);
+            cliente = clienteService.findOne(id);
             if (cliente == null) {
                 flash.addFlashAttribute("error", "Cliente no existe en la base de datos");
                 return "redirect:/listar";

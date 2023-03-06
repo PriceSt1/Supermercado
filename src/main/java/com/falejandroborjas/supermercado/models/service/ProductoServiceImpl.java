@@ -1,7 +1,8 @@
 package com.falejandroborjas.supermercado.models.service;
 
-import com.falejandroborjas.supermercado.models.dao.IClienteDao;
-import com.falejandroborjas.supermercado.models.entity.Cliente;
+import com.falejandroborjas.supermercado.models.dao.IProductosDao;
+import com.falejandroborjas.supermercado.models.entity.Producto;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,42 +11,36 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 @Service
-public class ClienteServiceImpl implements IClienteService {
-
-
+public class ProductoServiceImpl implements IProductoService{
     @Autowired
-    private IClienteDao clienteDao;
+    private IProductosDao productosDao;
     @Override
     @Transactional(readOnly = true)
-    public List<Cliente> findAll() {
-        return clienteDao.findAll();
+    public List<Producto> findAll() {
+        return productosDao.findAll();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Cliente> findAll(Pageable pageRequest) {
-        return clienteDao.findAll(pageRequest);
+    public Page<Producto> findAll(Pageable pageRequest) {
+        return productosDao.findAll(pageRequest);
     }
 
     @Override
     @Transactional
-    public void save(Cliente cliente) {
-        clienteDao.save(cliente);
-
+    public void save(Producto producto) {
+        productosDao.save(producto);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Cliente findOne(Long id) {
-        return (Cliente) clienteDao.findById(id).orElse(null);
+    public Producto findOne(Long id) {
+        return (Producto) productosDao.findById(id).orElse(null);
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
-        clienteDao.deleteById(id);
+        productosDao.deleteById(id);
     }
-
-
-
 }

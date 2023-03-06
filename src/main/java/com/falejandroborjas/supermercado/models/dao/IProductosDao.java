@@ -1,18 +1,19 @@
 package com.falejandroborjas.supermercado.models.dao;
 
 import com.falejandroborjas.supermercado.models.entity.Cliente;
+import com.falejandroborjas.supermercado.models.entity.Producto;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface IClienteDao extends PagingAndSortingRepository<Cliente,Long> {
-    List<Cliente> findAll();
+public interface IProductosDao extends PagingAndSortingRepository<Producto,Long> {
 
-    void save(Cliente cliente);
+    List<Producto> findAll();
+
+    void save(Producto producto);
 
     Optional<Object> findById(Long id);
 
     void deleteById(Long id);
-
 }
