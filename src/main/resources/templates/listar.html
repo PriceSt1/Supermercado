@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="layout/layout :: head"></head>
+<head th:replace="~{layout/layout :: head}"></head>
 
 <body>
-<header th:replace="layout/layout :: header"></header>
+<header th:replace="~{layout/layout :: header}"></header>
 </br>
 <div class="container py-5">
     <div class="card bg-light">
         <div class="card-header" th:text="${titulo}"></div>
         <div class="card-body">
             <h4 class="card-title">
-                <a th:href="@{/nuevoCliente}" class="btn btn-outline-primary">Añadir clientessss</a>
+                <a th:href="@{/nuevoCliente}" class="btn btn-outline-primary">Añadir clientes</a>
             </h4>
         </div>
         <hr>
@@ -19,7 +19,8 @@
             <div class="card m-1" th:each="cliente: ${clientes}">
                 <div class="card-header" th:if="${#strings.length(cliente.foto)>0}">
                     <img th:if="${#strings.length(cliente.foto)>0}" th:src="@{'/uploads/' + ${cliente.foto}}"
-                         th:alt="${cliente.foto}" class="card-img-top" style="width: 100px; height: 150px">
+                         th:alt="${cliente.foto}" class="card-img-top" style="width: 150px; height: 110px">
+
                 </div>
                 <div class="card-body">
                     <h5 class="card-title" th:text="${cliente.nombre}"></h5>
@@ -35,13 +36,13 @@
             </div>
         </div>
 
-        <div  style="margin: 0 auto ">
-            <nav th:replace="paginator-nav :: paginator"></nav>
+        <div style="margin: 0 auto ">
+            <nav th:replace="~{paginator-nav :: paginator}"></nav>
         </div>
 
     </div>
 </div>
-<footer th:replace="layout/layout :: footer"></footer>
+<footer th:replace="~{layout/layout :: footer}"></footer>
 </body>
 
 

@@ -1,6 +1,7 @@
 package com.falejandroborjas.supermercado.models.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class Factura implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     private String descripcion;
     private String observacion;
 
@@ -24,10 +26,10 @@ public class Factura implements Serializable {
     @Column(name = "create_at")
     private Date createAt;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Cliente cliente;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "factura_id")
     private List<ItemFactura> items;
 
@@ -36,7 +38,7 @@ public class Factura implements Serializable {
     }
 
     public List<ItemFactura> getItems() {
-        return items;
+        return this.items;
     }
 
     public void setItems(List<ItemFactura> items) {
@@ -48,7 +50,7 @@ public class Factura implements Serializable {
     }
 
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Long id) {
@@ -56,7 +58,7 @@ public class Factura implements Serializable {
     }
 
     public String getDescripcion() {
-        return descripcion;
+        return this.descripcion;
     }
 
     public void setDescripcion(String descripcion) {
@@ -64,7 +66,7 @@ public class Factura implements Serializable {
     }
 
     public String getObservacion() {
-        return observacion;
+        return this.observacion;
     }
 
     public void setObservacion(String observacion) {
@@ -72,7 +74,7 @@ public class Factura implements Serializable {
     }
 
     public Date getCreateAt() {
-        return createAt;
+        return this.createAt;
     }
 
     public void setCreateAt(Date createAt) {
@@ -80,7 +82,7 @@ public class Factura implements Serializable {
     }
 
     public Cliente getCliente() {
-        return cliente;
+        return this.cliente;
     }
 
     public void setCliente(Cliente cliente) {
@@ -90,11 +92,12 @@ public class Factura implements Serializable {
     public Double getTotal() {
         Double total = 0.0;
 
-        for (ItemFactura itemFactura : items) {
+        for (ItemFactura itemFactura : this.items) {
             total += itemFactura.calcularImporte();
         }
         return total;
     }
+
     @PrePersist
     public void prePersist() {
         this.createAt = new Date();

@@ -1,5 +1,6 @@
 package com.falejandroborjas.supermercado.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -18,11 +19,11 @@ public class ItemFactura implements Serializable {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="producto_id")
+    @JoinColumn(name = "producto_id")
     private Producto producto;
 
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Long id) {
@@ -30,7 +31,7 @@ public class ItemFactura implements Serializable {
     }
 
     public Integer getCantidad() {
-        return cantidad;
+        return this.cantidad;
     }
 
     public void setCantidad(Integer cantidad) {
@@ -38,7 +39,15 @@ public class ItemFactura implements Serializable {
     }
 
     public Double calcularImporte() {
-        return cantidad.doubleValue()*producto.getPrecio();
+        return this.cantidad.doubleValue() * this.producto.getPrecio();
+    }
+
+    public Producto getProducto() {
+        return this.producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
 }
 

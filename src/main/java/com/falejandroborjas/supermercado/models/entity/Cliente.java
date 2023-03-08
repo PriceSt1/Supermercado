@@ -10,13 +10,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 @Entity
 @Table(name = "clientes")
 public class Cliente implements Serializable {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -40,11 +38,11 @@ public class Cliente implements Serializable {
     private String foto;
 
     public Cliente() {
-        facturas = new ArrayList<Factura>();
+        this.facturas = new ArrayList<>();
     }
 
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Long id) {
@@ -52,7 +50,7 @@ public class Cliente implements Serializable {
     }
 
     public String getNombre() {
-        return nombre;
+        return this.nombre;
     }
 
     public void setNombre(String nombre) {
@@ -60,7 +58,7 @@ public class Cliente implements Serializable {
     }
 
     public String getApellido() {
-        return apellido;
+        return this.apellido;
     }
 
     public void setApellido(String apellido) {
@@ -68,7 +66,7 @@ public class Cliente implements Serializable {
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) {
@@ -76,19 +74,16 @@ public class Cliente implements Serializable {
     }
 
     public Date getCreateAt() {
-        return createAt;
+        return this.createAt;
     }
 
     public void setCreateAt(Date createAt) {
         this.createAt = createAt;
     }
 
-    public static long getSerialversionuid() {
-        return serialVersionUID;
-    }
 
     public String getFoto() {
-        return foto;
+        return this.foto;
     }
 
     public void setFoto(String foto) {
@@ -107,7 +102,7 @@ public class Cliente implements Serializable {
     }
 
     public List<Factura> getFacturas() {
-        return facturas;
+        return this.facturas;
     }
 
     public void setFacturas(List<Factura> facturas) {
@@ -115,6 +110,8 @@ public class Cliente implements Serializable {
     }
 
     public void addFactura(Factura factura) {
-        facturas.add(factura);
+        this.facturas.add(factura);
     }
+
+
 }
