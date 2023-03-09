@@ -41,7 +41,7 @@ public class FacturaController {
         factura.setCliente(cliente);
 
         model.put("factura", factura);
-        model.put("titulo", "Crear factura");
+        model.put("titulo", "Comprar");
 
         return "factura/form";
     }
@@ -86,7 +86,7 @@ public class FacturaController {
 
         clienteService.saveFactura(factura);
         status.setComplete();
-        flash.addFlashAttribute("success", "Factura creada con exito!");
+        flash.addFlashAttribute("success", "Compra realizada con exito!");
 
 
         return "redirect:/ver/" + factura.getCliente().getId();

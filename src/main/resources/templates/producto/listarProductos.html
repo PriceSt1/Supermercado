@@ -11,26 +11,27 @@
     <div class="card-header" th:text="${titulo}"></div>
     <div class="card-body">
       <h4 class="card-title">
-        <a th:href="@{/nuevoProducto}" class="btn btn-outline-primary">Añadir producto</a>
+        <a th:href="@{nuevoProducto}" class="btn btn-outline-primary">Añadir producto</a>
       </h4>
     </div>
     <hr>
     <div class="d-flex flex-wrap justify-content-start m-2">
       <div class="card m-1" th:each="producto: ${productos}">
         <div class="card-header" th:if="${#strings.length(producto.foto)>0}">
+
           <img th:if="${#strings.length(producto.foto)>0}" th:src="@{'/uploads/' + ${producto.foto}}"
                th:alt="${producto.foto}" class="card-img-top" style="width: 150px; height: 110px">
-
         </div>
         <div class="card-body">
-          <h5 class="card-title" th:text="${producto.nombre}"></h5>
+          <h4 class="card-title" th:text="${producto.nombre}"></h4>
           </br>
-          <a class="btn btn-outline-danger btn-xs" th:href="@{/eliminarCliente/} + ${producto.id}"
+          <h5 class="card-text" th:text="${producto.precio} + '€'"></h5>
+          <a class="btn btn-outline-danger btn-xs" th:href="@{/producto/eliminarProducto/} + ${producto.id}"
              th:text="Borrar"
              onclick="return confirm('¿Estas seguro que quieres eliminar este cliente de la base de datos?')"></a>
-          <a class="btn btn-outline-primary btn-xs" th:href="@{/nuevoCliente/} + ${producto.id}"
+          <a class="btn btn-outline-primary btn-xs" th:href="@{/producto/nuevoProducto/} + ${producto.id}"
              th:text="Editar"></a>
-          <a class="btn btn-outline-primary btn-xs" th:href="@{/ver/} + ${producto.id}"
+          <a class="btn btn-outline-primary btn-xs" th:href="@{/producto/verProducto/} + ${producto.id}"
              th:text="Ver"></a>
         </div>
       </div>
